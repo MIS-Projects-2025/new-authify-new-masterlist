@@ -34,5 +34,8 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'hris' => [
+        'url' => env('HRIS_API_URL'),
+        'key' => env('HRIS_API_KEY'),
+    ],
 ];

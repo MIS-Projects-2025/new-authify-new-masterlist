@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AuthifySession;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class AuthController extends Controller
 {
-    protected $authService;
-
-    public function __construct(AuthService $authService)
-    {
-        $this->authService = $authService;
-    }
+    public function __construct(
+        protected AuthService $authService
+    ) {}
 
     public function login(Request $request)
     {
@@ -27,7 +24,6 @@ class AuthController extends Controller
 
         $redirectUrl = $request->input('redirect') ?? $request->query('redirect');
 
-        // 🚀 SERVICE CALL
         $result = $this->authService->login($credentials, $redirectUrl);
 
         if (!$result['success']) {
@@ -39,10 +35,8 @@ class AuthController extends Controller
 
         $emp_data = $result['data'];
 
-        // 💾 Save session
-        DB::connection('authify')
-            ->table('authify_sessions')
-            ->insert($emp_data);
+        // 💾 Save session via model
+        AuthifySession::create($emp_data);
 
         // 🍪 Internal login
         if (!$redirectUrl) {
@@ -75,21 +69,18 @@ class AuthController extends Controller
     {
         $token = $request->query('token');
 
-        $record = DB::connection('authify')
-            ->table('authify_sessions')
-            ->where('token', $token)
-            ->first();
+        $record = AuthifySession::where('token', $token)->first();
 
         if (!$record) {
             return response()->json([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'Invalid Token',
-            ]);
+            ], 401);
         }
 
         return response()->json([
             'status' => 'success',
-            'data' => $record,
+            'data'   => $record,
         ]);
     }
 
@@ -97,21 +88,21 @@ class AuthController extends Controller
     {
         $token = $request->query('token');
 
-        DB::connection('authify')
-            ->table('authify_sessions')
-            ->where('token', $token)
-            ->delete();
+        AuthifySession::where('token', $token)->delete();
 
         session()->flush();
+
+        $redirectUrl = $request->query('redirect');
+
+        if ($redirectUrl) {
+            return redirect($redirectUrl);
+        }
 
         return redirect()->route('sso.login');
     }
 
-    protected function purgeOverstayingTokens()
+    protected function purgeOverstayingTokens(): void
     {
-        DB::connection('authify')
-            ->table('authify_sessions')
-            ->where('generated_at', '<', now()->subHours(12))
-            ->delete();
+        AuthifySession::where('generated_at', '<', now()->subHours(12))->delete();
     }
 }

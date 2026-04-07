@@ -43,7 +43,7 @@ class AuthifyInternalMiddleware
                 ->withCookie(cookie('authify_token', '', -1, '/'))
                 ->withCookie(cookie('sso_token', '', -1, '/')); // ✅ clear both
         }
-        $job = strtolower(trim($currentUser->emp_jobtitle));
+        $job = strtolower(trim($currentUser->emp_jobtitle ?? ''));
 
         $role = (
             str_contains($job, 'programmer') ||
@@ -61,7 +61,7 @@ class AuthifyInternalMiddleware
             'emp_station'   => $currentUser->emp_station,
             'emp_position'  => $currentUser->emp_position ?? null,
             'generated_at'  => $currentUser->generated_at,
-            'role'          => $role, 
+            'role'          => $role,
         ]]);
 
         session()->save();

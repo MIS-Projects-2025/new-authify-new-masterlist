@@ -1,4 +1,4 @@
-import { Label } from "@/components/ui/label";
+import { Label } from "@/Components/ui/label";
 
 export default function Field({ label, children }) {
     return (

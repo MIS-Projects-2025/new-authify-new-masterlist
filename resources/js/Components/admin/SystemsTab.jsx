@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Switch } from "@/components/ui/switch";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { Skeleton } from "@/Components/ui/skeleton";
+import { Switch } from "@/Components/ui/switch";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
+} from "@/Components/ui/select";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useAdminSystems, useAdminCards } from "@/hooks/useAdminPortal";
 import { getLucideIcon } from "@/utils/getLucideIcon";

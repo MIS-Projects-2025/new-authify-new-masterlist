@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Switch } from "@/components/ui/switch";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { Skeleton } from "@/Components/ui/skeleton";
+import { Switch } from "@/Components/ui/switch";
+import { Textarea } from "@/Components/ui/textarea";
 import {
     Select,
     SelectContent,
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select";
+} from "@/Components/ui/select";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useAdminCards, useAdminDepartments } from "@/hooks/useAdminPortal";
 import { COLOR_DOT } from "@/constants/portalConstants";

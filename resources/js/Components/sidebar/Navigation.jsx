@@ -5,8 +5,8 @@ import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Skeleton } from "@/components/ui/skeleton";
+} from "@/Components/ui/tooltip";
+import { Skeleton } from "@/Components/ui/skeleton";
 import { useDepartments } from "@/hooks/usePortal";
 
 const colorMap = {

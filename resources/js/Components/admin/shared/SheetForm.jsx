@@ -4,8 +4,8 @@ import {
     SheetHeader,
     SheetTitle,
     SheetFooter,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+} from "@/Components/ui/sheet";
+import { Button } from "@/Components/ui/button";
 
 export default function SheetForm({
     open,

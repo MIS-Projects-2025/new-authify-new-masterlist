@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/Components/ui/tabs";
 import { Building2, LayoutGrid, Server } from "lucide-react";
 import DepartmentsTab from "@/Components/admin/DepartmentsTab";
 import CardsTab from "@/Components/admin/CardsTab";

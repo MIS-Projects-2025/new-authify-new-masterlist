@@ -50,19 +50,22 @@ class AuthifyInternalMiddleware
             str_contains($job, 'mis senior supervisor')
         ) ? 'admin' : 'user';
         // 🔹 Rebuild session
-        session(['emp_data' => [
-            'token'         => $currentUser->token,
-            'emp_id'        => $currentUser->emp_id,
-            'emp_name'      => $currentUser->emp_name,
-            'emp_firstname' => $currentUser->emp_firstname,
-            'emp_jobtitle'  => $currentUser->emp_jobtitle,
-            'emp_dept'      => $currentUser->emp_dept,
-            'emp_prodline'  => $currentUser->emp_prodline,
-            'emp_station'   => $currentUser->emp_station,
-            'emp_position'  => $currentUser->emp_position ?? null,
-            'generated_at'  => $currentUser->generated_at,
-            'role'          => $role,
+      session(['emp_data' => [
+            'token'          => $currentUser->token,
+            'emp_id'         => $currentUser->emp_id,
+            'emp_name'       => $currentUser->emp_name,
+            'emp_firstname'  => $currentUser->emp_firstname,
+
+
+            'emp_dept_id'      => $currentUser->emp_dept_id,
+            'emp_jobtitle_id'  => $currentUser->emp_jobtitle_id,
+            'emp_prodline_id'  => $currentUser->emp_prodline_id,
+            'emp_position_id'  => $currentUser->emp_position_id,
+            'emp_station_id'   => $currentUser->emp_station_id,
+
+            'generated_at'   => $currentUser->generated_at,
         ]]);
+
 
         session()->save();
 

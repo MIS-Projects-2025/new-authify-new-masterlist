@@ -7,9 +7,9 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
-} from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+} from "@/Components/ui/dialog";
+import { Badge } from "@/Components/ui/badge";
+import { Skeleton } from "@/Components/ui/skeleton";
 import { ExternalLink, ChevronRight } from "lucide-react";
 import { useCards, useSystems, useDepartments } from "@/hooks/usePortal";
 import { usePage } from "@inertiajs/react";

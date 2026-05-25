@@ -2,14 +2,14 @@ import { Link, usePage } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 import Navigation from "@/Components/sidebar/Navigation";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Button } from "@/Components/ui/button";
+import { Separator } from "@/Components/ui/separator";
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/Components/ui/tooltip";
 import {
     Menu,
     X,

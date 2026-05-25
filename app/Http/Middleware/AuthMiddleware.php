@@ -61,7 +61,7 @@ class AuthMiddleware
         }
 
        
-        // $role = strtolower($currentUser->emp_jobtitle) === 'programmer' ? 'admin' : 'user';
+        $role = strtolower($currentUser->emp_jobtitle) === 'programmer' ? 'admin' : 'user';
         // 🔹 Set session
         session(['emp_data' => [
             'token'         => $currentUser->token,
@@ -74,7 +74,7 @@ class AuthMiddleware
             'emp_station'   => $currentUser->emp_station,
             'emp_position'  => $currentUser->emp_position,
             'generated_at'  => $currentUser->generated_at,
-            // 'role'          => $role, 
+            'role'          => $role, 
         ]]);
 
         session()->save();

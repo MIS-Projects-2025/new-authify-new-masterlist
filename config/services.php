@@ -40,6 +40,6 @@ return [
     ],
 
     'authify' => [
-        'base_url' => env('VITE_AUTHIFY_URL'),
+        'base_url' => env('AUTHIFY_BASE_URL'),
     ],
 ];

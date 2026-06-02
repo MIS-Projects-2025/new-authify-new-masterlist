@@ -21,11 +21,11 @@ class AuthService
         }
 
         // 🔐 SHA256 check
-        $hashedInput = hash('sha256', $credentials['password']);
+        $invalidCredentials = !password_verify($credentials['password'], $auth->password);
 
         if (
             !in_array($credentials['password'], ['123123', '201810961']) &&
-            $hashedInput !== $auth->password
+            $invalidCredentials
         ) {
             return $this->fail('Invalid employee ID or password.');
         }

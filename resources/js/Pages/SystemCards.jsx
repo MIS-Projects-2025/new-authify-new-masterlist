@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import * as LucideIcons from "lucide-react";
 import { Badge } from "@/Components/ui/badge";
 import { Skeleton } from "@/Components/ui/skeleton";
-import { LayoutGrid, ChevronDown, ExternalLink } from "lucide-react";
+import { LayoutGrid, ChevronDown } from "lucide-react";
 import { useCards, useSystems, useDepartments } from "@/hooks/usePortal";
 import { usePage } from "@inertiajs/react";
 
@@ -36,23 +36,31 @@ function getLucideIcon(name, className = "w-4 h-4") {
     return Icon ? <Icon className={className} /> : <LucideIcons.Box className={className} />;
 }
 
-// ── System button (action item inside expanded panel) ────────────────────────
+// ── System icon — mobile app style ───────────────────────────────────────────
 function SystemButton({ system, accentCls }) {
     return (
         <button
             onClick={() => window.open(system.system_url, "_blank")}
-            className="group flex flex-col items-center gap-1.5 px-3 py-2.5 rounded-lg border border-border bg-muted/40 hover:bg-muted transition-colors min-w-[72px] text-center"
+            className="group flex flex-col items-center gap-2 w-16"
         >
-            <div className={cn("w-7 h-7 rounded-md flex items-center justify-center", accentCls)}>
-                {getLucideIcon(system.modal_icon, "w-3.5 h-3.5")}
+            {/* Circle icon */}
+            <div className={cn(
+                "w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 transition-opacity group-hover:opacity-80",
+                accentCls,
+            )}>
+                {getLucideIcon(system.modal_icon, "w-5 h-5")}
             </div>
-            <span className="text-[10px] text-foreground font-medium leading-tight line-clamp-2 max-w-[64px]">
+
+            {/* Label — wraps freely, no truncation */}
+            <span className="text-[11px] text-center text-foreground leading-tight w-full">
                 {system.list_name}
             </span>
+
+            {/* Status badge */}
             <Badge
                 variant="outline"
                 className={cn(
-                    "text-[9px] px-1 py-0 h-3.5 border font-normal leading-none",
+                    "text-[9px] px-1.5 py-0 h-4 border font-normal",
                     statusColor[Number(system.system_status)],
                 )}
             >
@@ -62,13 +70,13 @@ function SystemButton({ system, accentCls }) {
     );
 }
 
-// ── One card row: trigger + lazy-loaded systems panel ────────────────────────
+// ── Card group row ────────────────────────────────────────────────────────────
 function CardGroup({ card, open, onToggle, colors }) {
     const { systems, loading } = useSystems(open ? card.id : null);
 
     return (
         <div className={cn("rounded-xl border bg-card overflow-hidden transition-colors", colors.card)}>
-            {/* Trigger row */}
+            {/* Trigger */}
             <button
                 onClick={onToggle}
                 aria-expanded={open}
@@ -97,22 +105,25 @@ function CardGroup({ card, open, onToggle, colors }) {
                 />
             </button>
 
-            {/* Expandable systems panel */}
+            {/* Expanded systems */}
             {open && (
-                <div className="border-t border-border px-4 pb-4 pt-3">
+                <div className="border-t border-border px-4 pb-5 pt-4">
                     {loading ? (
-                        <div className="flex gap-2">
-                            {[...Array(3)].map((_, i) => (
-                                <Skeleton key={i} className="h-[88px] w-[72px] rounded-lg" />
+                        <div className="flex flex-wrap gap-6">
+                            {[...Array(4)].map((_, i) => (
+                                <div key={i} className="flex flex-col items-center gap-2 w-16">
+                                    <Skeleton className="w-12 h-12 rounded-full" />
+                                    <Skeleton className="h-3 w-14 rounded" />
+                                </div>
                             ))}
                         </div>
                     ) : systems.length === 0 ? (
-                        <div className="flex items-center gap-2 py-2 text-muted-foreground">
+                        <div className="flex items-center gap-2 py-1 text-muted-foreground">
                             <LucideIcons.ServerOff className="w-4 h-4 opacity-50" />
                             <span className="text-xs">No systems available.</span>
                         </div>
                     ) : (
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-x-6 gap-y-5">
                             {systems.map((system) => (
                                 <SystemButton
                                     key={system.id}
@@ -128,7 +139,7 @@ function CardGroup({ card, open, onToggle, colors }) {
     );
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
+// ── Page ──────────────────────────────────────────────────────────────────────
 export default function SystemCards() {
     const basename = new URLSearchParams(window.location.search).get("dept") || "";
     const { departments } = useDepartments();
@@ -144,11 +155,9 @@ export default function SystemCards() {
     }
 
     function toggleAll() {
-        if (anyOpen) {
-            setOpenMap({});
-        } else {
-            setOpenMap(Object.fromEntries(cards.map((c) => [c.id, true])));
-        }
+        setOpenMap(
+            anyOpen ? {} : Object.fromEntries(cards.map((c) => [c.id, true]))
+        );
     }
 
     return (
